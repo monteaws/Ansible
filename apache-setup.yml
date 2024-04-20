@@ -1,0 +1,27 @@
+- name: write a playbook to deploy apache on ubuntu clients
+  hosts: ubuntu-clients
+
+  tasks:
+    - name: Update all packages on the ec2
+      ansible.builtin.apt: # Name of the module we would like to use
+        name: "*" # Every packages
+        state: latest # update the package to the latest version
+    - name: Install the Apache package httpd
+      ansible.builtin.apt: 
+        name: apache2
+        state: present
+    - name: Start and enable apache2 service
+      ansible.builtin.service: # Service module
+        name: apache2
+        state: started
+        enabled: yes
+    - name: Start service when system boots
+      ansible.builtin.service:
+        name: apache2
+        enabled: true
+    - name: Copy index.html file
+      ansible.builtin.copy: # module name to copy
+        src: /root/index.html # CONTROLLER
+        dest: /var/www/html # CLIENTS
+
+    

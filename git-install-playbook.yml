@@ -1,0 +1,11 @@
+# Installing GIT on all the ubuntu clients
+- name: install ubuntu client
+  hosts: ubuntu-clients
+  become: true
+
+  tasks:
+    - name: install git
+      apt:
+        name: git
+        state: present
+  become: true
